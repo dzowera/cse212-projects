@@ -13,7 +13,16 @@ public static class Arrays
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return []; // replace this return statement with your own
+        // step 1 is to create an array with size of the length
+        double[] myArray = new double[length];
+
+        // use loop to fill up the multiples of the number
+        for (int i = 0; i < length; i++)
+        {
+            myArray[i] = number * (i + 1);
+        }
+
+        return myArray; // replace this return statement with your own
     }
 
     /// <summary>
@@ -29,5 +38,36 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+
+        // first get the number of the data inside the list
+        int size = data.Count();
+
+        // check is amount is not greater than the size
+
+        amount = amount % size;
+
+        // we need to create an empty list so we cas store results
+        List<int> reverseList = new List<int>();
+
+        // add the numbers which are to the end of the list
+
+        for (int i = size - amount; i < size; i++)
+        {
+            reverseList.Add(data[i]);
+        }
+
+        // add the rest to the end
+
+        for (int i = 0; i < size - amount; i++)
+        {
+            reverseList.Add(data[i]);
+        }
+
+        // copy the data to the original list
+
+        for (int i = 0; i < size; i++)
+        {
+            data[i] = reverseList[i];
+        }
     }
 }
