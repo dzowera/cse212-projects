@@ -6,7 +6,7 @@
         // Scenario: Enqueue one value and then Dequeue it.
         // Expected Result: It should display 100
         Console.WriteLine("Test 1");
-        var queue = new SimpleQueue();
+        var queue = new Queue<int>();
         queue.Enqueue(100);
         var value = queue.Dequeue();
         Console.WriteLine(value);
@@ -18,7 +18,7 @@
         // Scenario: Enqueue multiple values and then Dequeue all of them
         // Expected Result: It should display 200, then 300, then 400 in that order
         Console.WriteLine("Test 2");
-        queue = new SimpleQueue();
+        queue = new Queue<int>();
         queue.Enqueue(200);
         queue.Enqueue(300);
         queue.Enqueue(400);
@@ -36,12 +36,12 @@
         // Scenario: Dequeue from an empty Queue
         // Expected Result: An exception should be raised
         Console.WriteLine("Test 3");
-        queue = new SimpleQueue();
+        queue = new Queue<int>();
         try {
             queue.Dequeue();
             Console.WriteLine("Oops ... This shouldn't have worked.");
         }
-        catch (IndexOutOfRangeException) {
+        catch (InvalidOperationException) {
             Console.WriteLine("I got the exception as expected.");
         }
         // Defect(s) Found: 
