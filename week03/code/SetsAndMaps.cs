@@ -22,7 +22,26 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+
+        var wordSet = new HashSet<string>(words);
+        var result = new List<string>();
+        var seen = new HashSet<string>();
+
+        foreach (var word in words)
+        {
+            if (word[0] == word[1]) continue; // skip words like "aa"
+            string reversed = new string(new char[] { word[1], word[0] });
+
+            if (wordSet.Contains(reversed) && !seen.Contains(reversed))
+            {
+                result.Add($"{word} & {reversed}");
+                seen.Add(word);
+                seen.Add(reversed);
+            }
+
+        }
+        return result.ToArray(); ;
+        
     }
 
     /// <summary>
@@ -43,6 +62,19 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
+
+            if (fields.Length < 4) continue;
+
+            string degree = fields[3].Trim();
+
+            if (degrees.ContainsKey(degree))
+            {
+                degrees[degree]++;
+            }
+            else
+            {
+                degrees[degree] = 1;
+            }
         }
 
         return degrees;
@@ -67,7 +99,33 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+
+        var clean1 = word1.Replace(" ", "").ToLower();
+        var clean2 = word2.Replace(" ", "").ToLower();
+
+        if (clean1.Length != clean2.Length)
+            return false;
+
+        var count = new Dictionary<char, int>();
+
+        foreach (char c in clean1)
+        {
+            if (!count.ContainsKey(c))
+                count[c] = 0;
+            count[c]++;
+        }
+
+        foreach (char c in clean2)
+        {
+            if (!count.ContainsKey(c))
+                return false;
+
+            count[c]--;
+            if (count[c] < 0)
+                return false;
+        }
+
+        return true;
     }
 
     /// <summary>
