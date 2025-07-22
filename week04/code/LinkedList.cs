@@ -33,6 +33,21 @@ public class LinkedList : IEnumerable<int>
     public void InsertTail(int value)
     {
         // TODO Problem 1
+        Node newNode = new(value);
+
+        // If the list is empty, head and tail will both point to the new node.
+        if (_tail is null)
+        {
+            _head = newNode;
+            _tail = newNode;
+        }
+        else
+        {
+            _tail.Next = newNode;    // Link current tail to new node
+            newNode.Prev = _tail;    // Link new node back to current tail
+            _tail = newNode;         // Update tail to the new node
+        }
+
     }
 
 
@@ -65,6 +80,19 @@ public class LinkedList : IEnumerable<int>
     public void RemoveTail()
     {
         // TODO Problem 2
+
+        // If the list is empty or has one item, set both head and tail to null
+        if (_head == _tail)
+        {
+            _head = null;
+            _tail = null;
+        }
+        // If the list has more than one item
+        else if (_tail is not null)
+        {
+            _tail.Prev!.Next = null; // Disconnect second-to-last node from last node
+            _tail = _tail.Prev;      // Update tail to point to second-to-last node
+        }
     }
 
     /// <summary>
@@ -109,6 +137,35 @@ public class LinkedList : IEnumerable<int>
     public void Remove(int value)
     {
         // TODO Problem 3
+
+        Node? curr = _head;
+
+        while (curr is not null)
+        {
+            if (curr.Data == value)
+            {
+                // Case 1: Remove from head
+                if (curr == _head)
+                {
+                    RemoveHead();
+                }
+                // Case 2: Remove from tail
+                else if (curr == _tail)
+                {
+                    RemoveTail();
+                }
+                // Case 3: Remove from middle
+                else
+                {
+                    curr.Prev!.Next = curr.Next; // Skip over current node forward
+                    curr.Next!.Prev = curr.Prev; // Skip over current node backward
+                }
+
+                return; // Remove only the first match
+            }
+
+            curr = curr.Next;
+        }
     }
 
     /// <summary>
@@ -117,6 +174,19 @@ public class LinkedList : IEnumerable<int>
     public void Replace(int oldValue, int newValue)
     {
         // TODO Problem 4
+
+
+        Node? curr = _head;
+
+        while (curr is not null)
+        {
+            if (curr.Data == oldValue)
+            {
+                curr.Data = newValue; // Replace the value
+            }
+
+            curr = curr.Next; // Move to the next node
+        }
     }
 
     /// <summary>
